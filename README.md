@@ -1,2 +1,5 @@
 # cli_quizzes
- School structs project
+School C++ structs project
+
+# License
+_Why would you even?_ :)) - The Unlicense
