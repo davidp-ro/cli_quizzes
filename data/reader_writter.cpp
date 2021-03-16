@@ -4,11 +4,13 @@
 
 #include "reader_writter.h"
 
-int read(Quiz quizzes[]) {
-    std::ifstream fin("data/quizzes.data");
+int number_of_quizzes = 0;
 
+int read_individual(Quiz quizzes[], QuizType type, const char filename[]) {
+    std::ifstream fin(filename);
+    
     char buffer[128];
-    unsigned short number_of_quizzes = 0;
+    // unsigned short number_of_quizzes = 0;
     bool started_quiz = false;
 
     // Daca ceva nu ii ok cu fisierul / e gol, renuntam
@@ -34,6 +36,7 @@ int read(Quiz quizzes[]) {
                 std::cout << "START OF NEW QUIZ\n";
             }
             Quiz new_quiz;
+            new_quiz.type = type;
             strcpy(new_quiz.name, buffer);
             fin.getline(buffer, 127);  // Next line
             new_quiz.number_of_questions = atoi(buffer);
@@ -52,6 +55,34 @@ int read(Quiz quizzes[]) {
     }
 
     fin.close();
+    return 0;
+}
+
+int read(Quiz quizzes[]) {
+    int status = read_individual(quizzes, Math, "quiz_uri/matematica.data");
+    if (status == -1) {
+        return -1;
+    }
+    // number_of_quizzes += (status - 1);
+
+    status = read_individual(quizzes, Rom, "quiz_uri/romana.data");
+    if (status == -1) {
+        return -1;
+    }
+    // number_of_quizzes += (status - 1); 
+
+    status = read_individual(quizzes, Geo, "quiz_uri/geografie.data");
+    if (status == -1) {
+        return -1;
+    }
+    // number_of_quizzes += (status - 1); 
+
+    status = read_individual(quizzes, Bio, "quiz_uri/biologie.data");
+    if (status == -1) {
+        return -1;
+    }
+    // number_of_quizzes += (status - 1); 
+
     return number_of_quizzes;
 }
 
@@ -61,14 +92,14 @@ int write(Quiz quizzes[], int number_of_quizzes) {
     for (int quiz_index = 0; quiz_index < number_of_quizzes; ++quiz_index) {
         // Parcurgem quiz-urile
         fout << "BEGIN_QUIZ\n";
-        fout << quizzes[quiz_index].name << "\n"; // Nume
-        fout << quizzes[quiz_index].number_of_questions << "\n"; // Nr intrebari
+        fout << quizzes[quiz_index].name << "\n";                 // Nume
+        fout << quizzes[quiz_index].number_of_questions << "\n";  // Nr intrebari
         for (unsigned short question_index = 0;
              question_index < quizzes[quiz_index].number_of_questions;
              ++question_index) {
             // Parcurgem intrebarile dintr-un quiz
-            fout << quizzes[quiz_index].questions[question_index].subject << ", "; // Subiectul intrebarii
-            fout << quizzes[quiz_index].questions[question_index].number_of_answers << ", "; // Nr raspunsuri
+            fout << quizzes[quiz_index].questions[question_index].subject << ", ";            // Subiectul intrebarii
+            fout << quizzes[quiz_index].questions[question_index].number_of_answers << ", ";  // Nr raspunsuri
             for (unsigned short answer_index = 0;
                  answer_index < quizzes[quiz_index].questions[question_index].number_of_answers;
                  ++answer_index) {

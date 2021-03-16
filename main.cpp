@@ -32,10 +32,12 @@ int main() {
         return EXIT_FAILURE;
     }
 
-    // std::cout << "\n" << quizzes[0].questions[0].answers[0].name;
-    // std::cout << "\n" << quizzes[1].questions[0].subject;
+    std::cout << quizzes[0].name << "\n";
+    std::cout << quizzes[1].name << "\n";
+    std::cout << quizzes[2].name << "\n";
+    std::cout << quizzes[3].name << "\n";
 
-    write(quizzes, number_of_quizzes);
+    // write(quizzes, number_of_quizzes);
 
     std::cout << "==[ EXIT ]==\n";
     return EXIT_SUCCESS;
