@@ -17,23 +17,42 @@
 const bool DEBUG_MODULE = false;
 
 /**
- * @brief Citeste quiz-urile din quizzes.data (folderul data/)
+ * @brief Citeste quiz-urile din folderul quiz-uri
  * 
  * @param quizzes array-ul in care vor fi stocate quiz-urile
  * @return status code: -1 - Ceva nu a mers | <pozitiv> - Numarul de quiz-uri
  */
-int read(Quiz quizzes[]);
+int read(Quiz quizzes[][12]);
 
 /**
- * @brief Scrie quiz-urile in quizzes.data (folderul data/)
+ * @brief Scrie quiz-urile in folderul quiz-uri
  * 
  * @param quizzes array-ul in care sunt stocate quiz-urile
  * @param number_of_quizzes care quiz-uri sunt
  * @return status code: 0 - Success | -1 - Ceva nu a mers 
  */
-int write(Quiz quizzes[], int number_of_quizzes);
+int write(Quiz quizzes[][12], int number_of_quizzes);
 
 /* ===============================[ Helpers ]================================ */
+
+/**
+ * @brief Citeste dintr-un fisier quiz-uri
+ * 
+ * @param quizzes array-ul in care sunt stocate quiz-urile
+ * @param type tip-ul quiz-ului
+ * @param filename fisierul din care citim quiz-urile / categorie
+ * @return status code: 0 - Success | -1 - Ceva nu a mers 
+ */
+int read_individual(Quiz quizzes[][12], QuizType type, const char filename[]);
+
+/**
+ * @brief Scrie intr-un fisier quiz-uri
+ * 
+ * @param quizzes array-ul in care sunt stocate quiz-urile
+ * @param type tip-ul quiz-ului
+ * @param filename fisierul in care scriem quiz-urile / categorie
+ */
+void write_individual(Quiz quizzes[][12], QuizType type, const char filename[]);
 
 /**
  * @brief Creeaza un struct Answer dintr-un string 

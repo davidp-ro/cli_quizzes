@@ -4,10 +4,10 @@
 #include "question.h"
 
 enum QuizType {
-    Geo = 1,
-    Math = 2,
-    Rom = 3,
-    Bio = 4,
+    Math = 0,
+    Rom = 1,
+    Geo = 2,
+    Bio = 3,
 };
 
 struct Quiz {

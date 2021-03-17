@@ -21,7 +21,7 @@
 
 int main() {
     std::cout << "==[ START ]==\n";
-    Quiz quizzes[32];
+    Quiz quizzes[6][12];
     int number_of_quizzes = 0;
 
     // Citire quiz-uri din fisier
@@ -32,12 +32,12 @@ int main() {
         return EXIT_FAILURE;
     }
 
-    std::cout << quizzes[0].name << "\n";
-    std::cout << quizzes[1].name << "\n";
-    std::cout << quizzes[2].name << "\n";
-    std::cout << quizzes[3].name << "\n";
+    std::cout << quizzes[Math][0].name << "\n";
+    std::cout << quizzes[Rom][0].name << "\n";
+    std::cout << quizzes[Geo][0].name << "\n";
+    std::cout << quizzes[Bio][0].name << "\n";
 
-    // write(quizzes, number_of_quizzes);
+    write(quizzes, number_of_quizzes);
 
     std::cout << "==[ EXIT ]==\n";
     return EXIT_SUCCESS;

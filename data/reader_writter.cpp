@@ -6,11 +6,48 @@
 
 int number_of_quizzes = 0;
 
-int read_individual(Quiz quizzes[], QuizType type, const char filename[]) {
+int read(Quiz quizzes[][12]) {
+    int status = read_individual(quizzes, Math, "quiz_uri/matematica.data");
+    if (status == -1) {
+        return -1;
+    }
+
+    status = read_individual(quizzes, Rom, "quiz_uri/romana.data");
+    if (status == -1) {
+        return -1;
+    }
+
+    status = read_individual(quizzes, Geo, "quiz_uri/geografie.data");
+    if (status == -1) {
+        return -1;
+    }
+
+    status = read_individual(quizzes, Bio, "quiz_uri/biologie.data");
+    if (status == -1) {
+        return -1;
+    }
+
+    return number_of_quizzes;
+}
+
+int write(Quiz quizzes[][12], int number_of_quizzes) {
+    write_individual(quizzes, Math, "quiz_uri/matematica-s.data");
+
+    write_individual(quizzes, Rom, "quiz_uri/romana-s.data");
+
+    write_individual(quizzes, Geo, "quiz_uri/geografie-s.data");
+
+    write_individual(quizzes, Bio, "quiz_uri/biologie-s.data");
+
+    return 0;
+}
+
+/* ===============================[ Helpers ]================================ */
+
+int read_individual(Quiz quizzes[][12], QuizType type, const char filename[]) {
     std::ifstream fin(filename);
-    
+
     char buffer[128];
-    // unsigned short number_of_quizzes = 0;
     bool started_quiz = false;
 
     // Daca ceva nu ii ok cu fisierul / e gol, renuntam
@@ -50,7 +87,7 @@ int read_individual(Quiz quizzes[], QuizType type, const char filename[]) {
             }
 
             // Adaugam quiz-ul citit
-            quizzes[number_of_quizzes] = new_quiz;
+            quizzes[type][number_of_quizzes] = new_quiz;
         }
     }
 
@@ -58,60 +95,53 @@ int read_individual(Quiz quizzes[], QuizType type, const char filename[]) {
     return 0;
 }
 
-int read(Quiz quizzes[]) {
-    int status = read_individual(quizzes, Math, "quiz_uri/matematica.data");
-    if (status == -1) {
-        return -1;
-    }
-    // number_of_quizzes += (status - 1);
-
-    status = read_individual(quizzes, Rom, "quiz_uri/romana.data");
-    if (status == -1) {
-        return -1;
-    }
-    // number_of_quizzes += (status - 1); 
-
-    status = read_individual(quizzes, Geo, "quiz_uri/geografie.data");
-    if (status == -1) {
-        return -1;
-    }
-    // number_of_quizzes += (status - 1); 
-
-    status = read_individual(quizzes, Bio, "quiz_uri/biologie.data");
-    if (status == -1) {
-        return -1;
-    }
-    // number_of_quizzes += (status - 1); 
-
-    return number_of_quizzes;
-}
-
-int write(Quiz quizzes[], int number_of_quizzes) {
-    std::ofstream fout("data/quizzes-save.data");
+void write_individual(Quiz quizzes[][12], QuizType type, const char filename[]) {
+    std::ofstream fout(filename);
 
     for (int quiz_index = 0; quiz_index < number_of_quizzes; ++quiz_index) {
         // Parcurgem quiz-urile
         fout << "BEGIN_QUIZ\n";
-        fout << quizzes[quiz_index].name << "\n";                 // Nume
-        fout << quizzes[quiz_index].number_of_questions << "\n";  // Nr intrebari
+        fout << quizzes[type][quiz_index].name << "\n";  // Nume
+        fout << quizzes[type][quiz_index].number_of_questions
+             << "\n";  // Nr intrebari
         for (unsigned short question_index = 0;
-             question_index < quizzes[quiz_index].number_of_questions;
+             question_index < quizzes[type][quiz_index].number_of_questions;
              ++question_index) {
             // Parcurgem intrebarile dintr-un quiz
-            fout << quizzes[quiz_index].questions[question_index].subject << ", ";            // Subiectul intrebarii
-            fout << quizzes[quiz_index].questions[question_index].number_of_answers << ", ";  // Nr raspunsuri
+            fout << quizzes[type][quiz_index].questions[question_index].subject
+                 << ", ";  // Subiectul intrebarii
+            fout << quizzes[type][quiz_index]
+                        .questions[question_index]
+                        .number_of_answers
+                 << ", ";  // Nr raspunsuri
             for (unsigned short answer_index = 0;
-                 answer_index < quizzes[quiz_index].questions[question_index].number_of_answers;
+                 answer_index < quizzes[type][quiz_index]
+                                    .questions[question_index]
+                                    .number_of_answers;
                  ++answer_index) {
                 // Parcurgem raspunsurile dintr-o intrebare
                 // Daca raspunsul e cel corect punem ! in fata
-                if (quizzes[quiz_index].questions[question_index].answers[answer_index].is_correct) {
-                    fout << "!" << quizzes[quiz_index].questions[question_index].answers[answer_index].name;
+                if (quizzes[type][quiz_index]
+                        .questions[question_index]
+                        .answers[answer_index]
+                        .is_correct) {
+                    fout << "!"
+                         << quizzes[type][quiz_index]
+                                .questions[question_index]
+                                .answers[answer_index]
+                                .name;
                 } else {
-                    fout << quizzes[quiz_index].questions[question_index].answers[answer_index].name;
+                    fout << quizzes[type][quiz_index]
+                                .questions[question_index]
+                                .answers[answer_index]
+                                .name;
                 }
                 // Daca nu e ultimul raspuns punem , la final, altfel \n
-                if (quizzes[quiz_index].questions[question_index].number_of_answers - answer_index > 1) {
+                if (quizzes[type][quiz_index]
+                            .questions[question_index]
+                            .number_of_answers -
+                        answer_index >
+                    1) {
                     fout << ", ";
                 } else {
                     fout << "\n";
@@ -122,10 +152,7 @@ int write(Quiz quizzes[], int number_of_quizzes) {
     }
 
     fout.close();
-    return 0;
 }
-
-/* ===============================[ Helpers ]================================ */
 
 Answer parseRawAnswer(char pointer_to_answer[]) {
     Answer new_answer;
