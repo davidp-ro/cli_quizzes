@@ -21,7 +21,7 @@
 
 int main() {
     std::cout << "==[ START ]==\n";
-    Quiz quizzes[6][12];
+    Quiz quizzes[MAX_NUMBER_OF_CATEGORIES][MAX_NUMBER_OF_QUIZZES];
     int number_of_quizzes = 0;
 
     // Citire quiz-uri din fisier
@@ -37,7 +37,7 @@ int main() {
     std::cout << quizzes[Geo][0].name << "\n";
     std::cout << quizzes[Bio][0].name << "\n";
 
-    write(quizzes, number_of_quizzes);
+    write(quizzes);
 
     std::cout << "==[ EXIT ]==\n";
     return EXIT_SUCCESS;

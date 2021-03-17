@@ -16,22 +16,24 @@
 // Print-uri pentru debugging
 const bool DEBUG_MODULE = false;
 
+const int MAX_NUMBER_OF_CATEGORIES = 6;
+const int MAX_NUMBER_OF_QUIZZES = 12; // Pe categorie
+
 /**
  * @brief Citeste quiz-urile din folderul quiz-uri
  * 
  * @param quizzes array-ul in care vor fi stocate quiz-urile
  * @return status code: -1 - Ceva nu a mers | <pozitiv> - Numarul de quiz-uri
  */
-int read(Quiz quizzes[][12]);
+int read(Quiz quizzes[][MAX_NUMBER_OF_QUIZZES]);
 
 /**
  * @brief Scrie quiz-urile in folderul quiz-uri
  * 
  * @param quizzes array-ul in care sunt stocate quiz-urile
- * @param number_of_quizzes care quiz-uri sunt
  * @return status code: 0 - Success | -1 - Ceva nu a mers 
  */
-int write(Quiz quizzes[][12], int number_of_quizzes);
+int write(Quiz quizzes[][MAX_NUMBER_OF_QUIZZES]);
 
 /* ===============================[ Helpers ]================================ */
 
@@ -43,7 +45,7 @@ int write(Quiz quizzes[][12], int number_of_quizzes);
  * @param filename fisierul din care citim quiz-urile / categorie
  * @return status code: 0 - Success | -1 - Ceva nu a mers 
  */
-int read_individual(Quiz quizzes[][12], QuizType type, const char filename[]);
+int read_individual(Quiz quizzes[][MAX_NUMBER_OF_QUIZZES], QuizType type, const char filename[]);
 
 /**
  * @brief Scrie intr-un fisier quiz-uri
@@ -52,7 +54,7 @@ int read_individual(Quiz quizzes[][12], QuizType type, const char filename[]);
  * @param type tip-ul quiz-ului
  * @param filename fisierul in care scriem quiz-urile / categorie
  */
-void write_individual(Quiz quizzes[][12], QuizType type, const char filename[]);
+void write_individual(Quiz quizzes[][MAX_NUMBER_OF_QUIZZES], QuizType type, const char filename[]);
 
 /**
  * @brief Creeaza un struct Answer dintr-un string 

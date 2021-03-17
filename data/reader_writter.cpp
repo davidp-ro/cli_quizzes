@@ -6,7 +6,7 @@
 
 int number_of_quizzes = 0;
 
-int read(Quiz quizzes[][12]) {
+int read(Quiz quizzes[][MAX_NUMBER_OF_QUIZZES]) {
     int status = read_individual(quizzes, Math, "quiz_uri/matematica.data");
     if (status == -1) {
         return -1;
@@ -30,7 +30,7 @@ int read(Quiz quizzes[][12]) {
     return number_of_quizzes;
 }
 
-int write(Quiz quizzes[][12], int number_of_quizzes) {
+int write(Quiz quizzes[][MAX_NUMBER_OF_QUIZZES]) {
     write_individual(quizzes, Math, "quiz_uri/matematica-s.data");
 
     write_individual(quizzes, Rom, "quiz_uri/romana-s.data");
@@ -44,11 +44,12 @@ int write(Quiz quizzes[][12], int number_of_quizzes) {
 
 /* ===============================[ Helpers ]================================ */
 
-int read_individual(Quiz quizzes[][12], QuizType type, const char filename[]) {
+int read_individual(Quiz quizzes[][MAX_NUMBER_OF_QUIZZES], QuizType type, const char filename[]) {
     std::ifstream fin(filename);
 
     char buffer[128];
     bool started_quiz = false;
+    int index = 0;
 
     // Daca ceva nu ii ok cu fisierul / e gol, renuntam
     if (!fin.good()) {
@@ -68,6 +69,7 @@ int read_individual(Quiz quizzes[][12], QuizType type, const char filename[]) {
         } else if (strcmp(buffer, "END_QUIZ") == 0 && started_quiz) {
             started_quiz = false;
             ++number_of_quizzes;
+            ++index;
         } else {
             if (DEBUG_MODULE) {
                 std::cout << "START OF NEW QUIZ\n";
@@ -87,7 +89,7 @@ int read_individual(Quiz quizzes[][12], QuizType type, const char filename[]) {
             }
 
             // Adaugam quiz-ul citit
-            quizzes[type][number_of_quizzes] = new_quiz;
+            quizzes[type][index] = new_quiz;
         }
     }
 
@@ -95,10 +97,14 @@ int read_individual(Quiz quizzes[][12], QuizType type, const char filename[]) {
     return 0;
 }
 
-void write_individual(Quiz quizzes[][12], QuizType type, const char filename[]) {
+void write_individual(Quiz quizzes[][MAX_NUMBER_OF_QUIZZES], QuizType type, const char filename[]) {
     std::ofstream fout(filename);
 
-    for (int quiz_index = 0; quiz_index < number_of_quizzes; ++quiz_index) {
+    for (int quiz_index = 0; quiz_index < MAX_NUMBER_OF_QUIZZES; ++quiz_index) {
+        // Daca numele e gol => nu mai avem quiz-uri de acest tip
+        if (strlen(quizzes[type][quiz_index].name) == 0) {
+            break;
+        }
         // Parcurgem quiz-urile
         fout << "BEGIN_QUIZ\n";
         fout << quizzes[type][quiz_index].name << "\n";  // Nume
