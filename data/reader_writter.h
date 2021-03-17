@@ -16,9 +16,6 @@
 // Print-uri pentru debugging
 const bool DEBUG_MODULE = false;
 
-const int MAX_NUMBER_OF_CATEGORIES = 6;
-const int MAX_NUMBER_OF_QUIZZES = 12; // Pe categorie
-
 /**
  * @brief Citeste quiz-urile din folderul quiz-uri
  * 

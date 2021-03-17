@@ -3,6 +3,13 @@
 
 #include "question.h"
 
+const int MAX_NUMBER_OF_CATEGORIES = 6;
+const int MAX_NUMBER_OF_QUIZZES = 12; // Pe categorie
+const int NUMBER_OF_TYPES = 3; // Cate sunt MINUS 1
+
+/**
+ * @brief Tipurile de quiz disponibile
+ */
 enum QuizType {
     Math = 0,
     Rom = 1,
@@ -10,6 +17,9 @@ enum QuizType {
     Bio = 3,
 };
 
+/**
+ * @brief Reprezentarea unui Quiz
+ */
 struct Quiz {
     char name[128];
     QuizType type;

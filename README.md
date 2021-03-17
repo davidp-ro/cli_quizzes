@@ -1,5 +1,9 @@
-# cli_quizzes
-School C++ structs project
+# cli_quizzes  -  EN | RO
+School C++ structs project | Proeict struct-uri pentru scoala
+
+Windows only! (atm at least) | Doar windows momentan
+
+---
 
 # License
-_Why would you even?_ :)) - The Unlicense
+The Unlicense

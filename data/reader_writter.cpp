@@ -1,9 +1,10 @@
 /**
- * Documentatie functii in header
+ * Documentatie pentru functii in header
  */
 
 #include "reader_writter.h"
 
+// Tine cont de cate quiz-uri au fost citite
 int number_of_quizzes = 0;
 
 int read(Quiz quizzes[][MAX_NUMBER_OF_QUIZZES]) {
@@ -31,13 +32,13 @@ int read(Quiz quizzes[][MAX_NUMBER_OF_QUIZZES]) {
 }
 
 int write(Quiz quizzes[][MAX_NUMBER_OF_QUIZZES]) {
-    write_individual(quizzes, Math, "quiz_uri/matematica-s.data");
+    write_individual(quizzes, Math, "quiz_uri/matematica.data");
 
-    write_individual(quizzes, Rom, "quiz_uri/romana-s.data");
+    write_individual(quizzes, Rom, "quiz_uri/romana.data");
 
-    write_individual(quizzes, Geo, "quiz_uri/geografie-s.data");
+    write_individual(quizzes, Geo, "quiz_uri/geografie.data");
 
-    write_individual(quizzes, Bio, "quiz_uri/biologie-s.data");
+    write_individual(quizzes, Bio, "quiz_uri/biologie.data");
 
     return 0;
 }
