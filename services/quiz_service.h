@@ -1,8 +1,8 @@
 #ifndef QUIZ_CLI_TAKE_QUIZ_H
 #define QUIZ_CLI_TAKE_QUIZ_H
 
-#include "../models/quiz.h"
+#include "../ui/tui.h"
 
-int take_quiz(Quiz quiz);
+int take_quiz(Quiz quiz, User user);
 
 #endif

@@ -3,7 +3,9 @@
 
 #include <iostream>
 #include <windows.h>
+#include <ctime>
 #include "../models/quiz.h"
+#include "../models/user.h"
 
 const int MAX_SAFE_INPUT = 256;
 
@@ -24,6 +26,8 @@ const char bun_venit[][75] = {
     {"\\____/ \\__,_|_| |_|   \\_/ \\___|_| |_|_|\\__| (_)\n"}
 };
 
+const char categorii_quiz[][30] = {{"Matematica"}, {"Romana"}, {"Geografie"}, {"Biologie"}};
+
 /* ================================[ Functii ]=============================== */
 
 /**
@@ -36,12 +40,16 @@ int input(char s[]);
 
 /* ===============================[ Screens ]================================ */
 
-int select_quiz_category();
+int select_quiz_category(const char * title);
+
+int select_quiz(const char * title, Quiz quizzes[][MAX_NUMBER_OF_QUIZZES], int type);
+
+void show_quiz_question(Quiz quiz, User user, unsigned short question_index);
 
 /**
  * @brief Afiseaza meniul 
  */
-void main_menu();
+void main_menu(User user);
 
 /**
  * @brief Afiseaza mesajul de inceput
@@ -49,6 +57,8 @@ void main_menu();
 void welcome();
 
 /* ===============================[ Helpers ]================================ */
+
+void get_time_and_date(char s[]);
 
 /**
  * @brief Afiseaza header-ul 

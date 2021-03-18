@@ -13,14 +13,17 @@ int ui::input(char s[]) {
 
 /* ===============================[ Screens ]================================ */
 
-int ui::select_quiz_category() {
+int ui::select_quiz_category(const char* title) {
     ui::reset();
     ui::put_header();
+    std::cout << title << "\n";
+    std::cout << "\n"
+              << ui::separator << "\n";
     std::cout << "\nAlegeti o categorie (introducand numarul corespunzator):\n"
-              << "\t1) Matematica\n"
-              << "\t2) Romana\n"
-              << "\t3) Geografie\n"
-              << "\t4) Biologie\n";
+              << "\t1) " << ui::categorii_quiz[Math] << "\n"
+              << "\t2) " << ui::categorii_quiz[Rom] << "\n"
+              << "\t3) " << ui::categorii_quiz[Geo] << "\n"
+              << "\t4) " << ui::categorii_quiz[Bio] << "\n";
     ui::put_footer();
 
     char option[MAX_SAFE_INPUT];
@@ -45,9 +48,80 @@ int ui::select_quiz_category() {
     }
 }
 
-void ui::main_menu() {
+int ui::select_quiz(const char* title, Quiz quizzes[][MAX_NUMBER_OF_QUIZZES], int type) {
     ui::reset();
     ui::put_header();
+    std::cout << title << "\n";
+    std::cout << "\n"
+              << ui::separator << "\n";
+    std::cout << "\nAlegeti un quiz (introducand numarul corespunzator):\n";
+    unsigned short index = 0;
+    for (; index < MAX_NUMBER_OF_QUIZZES; ++index) {
+        if (strlen(quizzes[type][index].name) != 0) {
+            std::cout << "\t" << index + 1 << ") "
+                      << quizzes[type][index].name
+                      << " - " << quizzes[type][index].number_of_questions
+                      << " intrebari\n";
+        } else
+            break;
+    }
+    ui::put_footer();
+
+    char option_s[MAX_SAFE_INPUT];
+    if (!ui::input(option_s)) {
+        return -1;
+    }
+
+    int option = atoi(option_s);
+    if (option < 1 || option > index) {
+        ui::reset();
+        std::cout << "Atentie! Optiune invalida...\n";
+        Sleep(1000);
+        return -2;
+    }
+    return option - 1;
+}
+
+void ui::show_quiz_question(Quiz quiz, User user, unsigned short question_index) {
+    ui::reset();
+    ui::put_header();
+
+    std::cout << ui::categorii_quiz[quiz.type] << " : " << quiz.name << " | Intrebarea " << question_index + 1 << " din " << quiz.number_of_questions << "\n";
+    std::cout << ui::separator << "\n";
+    std::cout << "Nume: " << user.name << " | Cod test: " << user.verification_code << "\n";
+
+    std::cout << ui::separator << "\n\n";
+
+    std::cout << quiz.questions[question_index].subject << "\n";
+
+    for (unsigned short answer_index = 0;
+         answer_index < quiz.questions[question_index].number_of_answers;
+         ++answer_index) {
+        std::cout << "\t" << answer_index + 1 << ") " << quiz.questions[question_index].answers[answer_index].name << "\n";
+    }
+
+    std::cout << "\n"
+              << ui::separator << "\n";
+    std::cout << "\nAlegeti un raspuns (introducand numarul corespunzator):\n";
+
+    ui::put_footer();
+}
+
+void ui::main_menu(User user) {
+    char timedate[80];
+    ui::get_time_and_date(timedate);
+    
+    char padding[80] = "";
+    for (unsigned short i = 0; i < (80 - (strlen(user.name) + 6) - strlen(timedate)); ++i) {
+        strcat(padding, " ");
+    }
+
+    ui::reset();
+    ui::put_header();
+    std::cout << "\nBuna, " << user.name << padding << timedate << "\n";
+
+    std::cout << "\n" << ui::separator << "\n";
+
     std::cout << "\nAlegeti o optiune (introducand numarul corespunzator):\n"
               << "\t1) Incepeti un nou quiz\n\n"
               << "\t2) Vedeti quiz-urile disponibile\n"
@@ -57,6 +131,7 @@ void ui::main_menu() {
 }
 
 void ui::welcome() {
+    ui::put_header();
     std::cout << "\n"
               << ui::bun_venit[0]
               << ui::bun_venit[1]
@@ -68,11 +143,51 @@ void ui::welcome() {
     std::cout << "\n"
               << ui::separator << "\n";
 
-    std::cout << "Aveti un cod de verificare de la profesor? Daca da introduce-ti-l.\n"
+    std::cout << "Daca ai primit un cod de la profesor acum e momentul sa il introduceti.\n"
               << "Daca nu doar apasati enter.\n";
+
+    ui::put_footer();
 }
 
 /* ===============================[ Helpers ]================================ */
+
+void ui::get_time_and_date(char s[]) {
+    time_t now = time(0);
+    tm *time = localtime(&now);
+    char buf[36];
+    
+    strcpy(s, "");
+    
+    // Time:
+    // Ora
+    itoa(time->tm_hour, buf, 10);
+    strcat(s, buf);
+    strcat(s, ":");
+    // Minut
+    itoa(time->tm_min, buf, 10);
+    strcat(s, buf);
+
+    strcat(s, " ");
+
+    // Date:
+    // Ziua (cu 0 in fata daca e sub 10)
+    itoa(time->tm_mday, buf, 10);
+    if (time->tm_mday < 10) {
+        strcat(s, "0");
+    }
+    strcat(s, buf);
+    strcat(s, ".");
+    // Luna (cu 0 in fata daca e sub 10)
+    itoa(1 + time->tm_mon, buf, 10);
+    if (1 + time->tm_mon < 10) {
+        strcat(s, "0");
+    }
+    strcat(s, buf);
+    strcat(s, ".");
+    // Anul
+    itoa(1900 + time->tm_year, buf, 10);
+    strcat(s, buf);
+}
 
 void ui::put_header() {
     std::cout << "\n"

@@ -13,22 +13,22 @@
  *  Fiecare quiz se termina cu END_QUIZ
  * 
  * Compile:
- *  V Compilator  V Linkuim source-file-urile                                                                  Toate Warning-urile V   V Output
- *  g++ main.cpp -I data/ data/reader_writter.cpp -I models/ models/answer.cpp -I models/ models/question.cpp -I ui/ ui/tui.cpp -Wall -o quizzes.exe
+ *  V Compilator  V Linkuim source-file-urile                                                                                                Toate Warning-urile V   V Output
+ *  g++ main.cpp -I data/ data/reader_writter.cpp -I models/ models/answer.cpp -I models/ models/question.cpp -I ui/ ui/tui.cpp -I services/ services/quiz_service.cpp -Wall -o quizzes.exe
  */
 
 #include "data/reader_writter.h"
+#include "services/quiz_service.h"
 #include "ui/tui.h"
+
+bool is_valid_category(int category);
 
 int main() {
     std::cout << "Initializare...\n";
     Quiz quizzes[MAX_NUMBER_OF_CATEGORIES][MAX_NUMBER_OF_QUIZZES];
-    int number_of_quizzes = 0;
+    User user;
 
-    // Citire quiz-uri din fisier
-    number_of_quizzes = read(quizzes);
-
-    if (number_of_quizzes == -1) {
+    if (read(quizzes) == -1) {
         std::cout << "Whoops! Ceva nu a mers bine! (Exista fisierele in folderul quiz_uri?)\n";
         return EXIT_FAILURE;
     }
@@ -36,21 +36,26 @@ int main() {
     /* -- Initializat -- */
 
     ui::reset();
-    ui::put_header();
     ui::welcome();
-    ui::put_footer();
 
-    char verification_code[MAX_SAFE_INPUT];
-    if (!ui::input(verification_code)) {
+    if (!ui::input(user.verification_code)) {
         return EXIT_SUCCESS;
     }
 
-    if (strlen(verification_code) == 0) {
-        strcpy(verification_code, "<FARA>");
+    if (strlen(user.verification_code) == 0) {
+        strcpy(user.verification_code, "<FARA>");
     };
 
+    std::cout << ui::separator 
+              << "\nIntroduceti numele dumneavoastra\n";
+    if (!ui::input(user.name)) {
+        return EXIT_SUCCESS;
+    }
+
+    /* -- Meniu -- */
+
     while (true) {
-        ui::main_menu();
+        ui::main_menu(user);
 
         char option[MAX_SAFE_INPUT];
         if (!ui::input(option)) {
@@ -58,35 +63,38 @@ int main() {
         }
 
         int category = 0;
+        int selection = 0;
 
         switch (atoi(option)) {
             case 1:
-                category = ui::select_quiz_category();
-                if (category < 0 || category > NUMBER_OF_TYPES) {
-                    break;
+                category = ui::select_quiz_category("Inceperea unui nou Quiz");
+                if (is_valid_category(category)) {
+                    char select_title[] = "Selectati un quiz din categoria ";
+                    strcat(select_title, ui::categorii_quiz[category]);
+
+                    selection = ui::select_quiz(select_title, quizzes, category);
+
+                    if (selection == -1) {
+                        break;
+                    }
+
+                    take_quiz(quizzes[category][selection], user);
                 }
-                // TODO: Alege testul efectiv
                 break;
             case 2:
-                category = ui::select_quiz_category();
-                if (category < 0 || category > NUMBER_OF_TYPES) {
-                    break;
+                category = ui::select_quiz_category("Quiz-uri disponibile");
+                if (is_valid_category(category)) {
+                    selection = ui::select_quiz("", quizzes, category);
                 }
-                // TODO: Alege testul efectiv
                 break;
             case 3:
-                category = ui::select_quiz_category();
-                if (category < 0 || category > NUMBER_OF_TYPES) {
-                    break;
-                }
                 // TODO: Ecran pentru creeatie
                 break;
             case 4:
-                category = ui::select_quiz_category();
-                if (category < 0 || category > NUMBER_OF_TYPES) {
-                    break;
+                category = ui::select_quiz_category("Stergeti un quiz");
+                if (is_valid_category(category)) {
+                    selection = ui::select_quiz("", quizzes, category);
                 }
-                // TODO: Alege testul efectiv
                 break;
             default:
                 ui::reset();
@@ -100,4 +108,8 @@ int main() {
     }
 
     return EXIT_SUCCESS;
+}
+
+bool is_valid_category(int category) {
+    return (category >= 0 && category < NUMBER_OF_TYPES);
 }
