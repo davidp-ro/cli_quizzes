@@ -161,10 +161,16 @@ void ui::get_time_and_date(char s[]) {
     // Time:
     // Ora
     itoa(time->tm_hour, buf, 10);
+    if (time->tm_hour < 10) {
+        strcat(s, "0");
+    }
     strcat(s, buf);
     strcat(s, ":");
     // Minut
     itoa(time->tm_min, buf, 10);
+    if (time->tm_min < 10) {
+        strcat(s, "0");
+    }
     strcat(s, buf);
 
     strcat(s, " ");
