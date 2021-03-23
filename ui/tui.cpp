@@ -82,7 +82,7 @@ int ui::select_quiz(const char* title, Quiz quizzes[][MAX_NUMBER_OF_QUIZZES], in
     return option - 1;
 }
 
-void ui::show_quiz_question(Quiz quiz, User user, unsigned short question_index) {
+void ui::show_quiz_question(Quiz quiz, User user, unsigned short question_index, bool view_mode) {
     ui::reset();
     ui::put_header();
 
@@ -100,9 +100,13 @@ void ui::show_quiz_question(Quiz quiz, User user, unsigned short question_index)
         std::cout << "\t" << answer_index + 1 << ") " << quiz.questions[question_index].answers[answer_index].name << "\n";
     }
 
-    std::cout << "\n"
-              << ui::separator << "\n";
-    std::cout << "\nAlegeti un raspuns (introducand numarul corespunzator):\n";
+    std::cout << "\n" << ui::separator << "\n";
+
+    if (view_mode) {
+        std::cout << "\nApasati enter pentru a merge mai departe\n";
+    } else {
+        std::cout << "\nAlegeti un raspuns (introducand numarul corespunzator):\n";
+    }
 
     ui::put_footer();
 }

@@ -84,7 +84,16 @@ int main() {
             case 2:
                 category = ui::select_quiz_category("Quiz-uri disponibile");
                 if (is_valid_category(category)) {
-                    selection = ui::select_quiz("", quizzes, category);
+                    char select_title[] = "Selectati un quiz din categoria ";
+                    strcat(select_title, ui::categorii_quiz[category]);
+
+                    selection = ui::select_quiz(select_title, quizzes, category);
+
+                    if (selection == -1) {
+                        break;
+                    }
+
+                    view_quiz(quizzes[category][selection], user);
                 }
                 break;
             case 3:

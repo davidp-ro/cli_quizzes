@@ -44,7 +44,7 @@ int select_quiz_category(const char * title);
 
 int select_quiz(const char * title, Quiz quizzes[][MAX_NUMBER_OF_QUIZZES], int type);
 
-void show_quiz_question(Quiz quiz, User user, unsigned short question_index);
+void show_quiz_question(Quiz quiz, User user, unsigned short question_index, bool view_mode);
 
 /**
  * @brief Afiseaza meniul 

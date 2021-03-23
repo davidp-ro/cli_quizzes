@@ -38,7 +38,7 @@ int take_quiz(Quiz quiz, User user) {
     
     char save_path[1024] = "";
     strcpy(save_path, getenv("USERPROFILE"));
-    
+
     if (strlen(save_path) != 0) {
         strcat(save_path, "\\Desktop\\");
     }
@@ -62,7 +62,7 @@ int take_quiz(Quiz quiz, User user) {
     for (unsigned short question_index = 0;
          question_index < quiz.number_of_questions;
          ++question_index) {
-        ui::show_quiz_question(quiz, user, question_index);
+        ui::show_quiz_question(quiz, user, question_index, false);
         put_current_question_to_file(s_file, quiz, question_index);
 
         if (DBG_SHOW_FILEPATH) {
@@ -95,5 +95,20 @@ int take_quiz(Quiz quiz, User user) {
            << " | Scor: " << (raspunsuri_corecte * 100) / quiz.number_of_questions << "%";
 
     s_file.close();
+    return 0;
+}
+
+int view_quiz(Quiz quiz, User user) {
+    for (unsigned short question_index = 0;
+         question_index < quiz.number_of_questions;
+         ++question_index) {
+        ui::show_quiz_question(quiz, user, question_index, true);
+
+        char option_s[MAX_SAFE_INPUT];
+        if (!ui::input(option_s)) {
+            return -1;
+        }
+    }
+
     return 0;
 }
