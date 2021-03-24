@@ -1,3 +1,7 @@
+/**
+ * Se ocupa de operatiile legate de quiz-uri 
+ */
+
 #ifndef QUIZ_CLI_TAKE_QUIZ_H
 #define QUIZ_CLI_TAKE_QUIZ_H
 
@@ -5,6 +9,7 @@
 #include "../ui/tui.h"
 #include "../data/reader_writter.h"
 
+// Daca e true va afisa path-ul pana la fiserul de salvare
 const bool DBG_SHOW_FILEPATH = false;
 
 /**

@@ -1,11 +1,20 @@
+/**
+ * Reprezentarea unui quiz + enum cu tipurile de quiz-uri
+ */
+
 #ifndef QUIZ_CLI_QUIZ_H
 #define QUIZ_CLI_QUIZ_H
 
 #include "question.h"
 
+// Cate categorii pot fi stocate
 const int MAX_NUMBER_OF_CATEGORIES = 6;
-const int MAX_NUMBER_OF_QUIZZES = 12; // Pe categorie
-const int NUMBER_OF_TYPES = 3; // Cate sunt MINUS 1
+
+// Cate quiz-uri pot fi stocate pt fiecare categorie de quiz-uri
+const int MAX_NUMBER_OF_QUIZZES = 12;
+
+// Cate tipuri sunt in enum - 1
+const int NUMBER_OF_TYPES = 3;
 
 /**
  * @brief Tipurile de quiz disponibile

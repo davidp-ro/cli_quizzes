@@ -1,3 +1,9 @@
+/**
+ * Se ocupa de tot ce e legat de ui - afisari / clear / input-uri
+ * 
+ * Documentatie pentru functii in header 
+ */
+
 #include "tui.h"
 
 int ui::input(char s[]) {

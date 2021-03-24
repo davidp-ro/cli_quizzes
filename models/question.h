@@ -1,3 +1,7 @@
+/**
+ * Reprezentarea unei intrebari
+ */
+
 #ifndef QUIZ_CLI_QUESTION_H
 #define QUIZ_CLI_QUESTION_H
 

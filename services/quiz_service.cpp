@@ -1,3 +1,9 @@
+/**
+ * Se ocupa de operatiile legate de quiz-uri 
+ * 
+ * Documentatie pentru functii in header
+ */
+
 #include "quiz_service.h"
 
 void put_current_question_to_file(std::ofstream &file, Quiz quiz, unsigned short question_index) {

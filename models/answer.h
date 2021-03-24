@@ -1,3 +1,7 @@
+/**
+ * Reprezentarea unui raspuns
+ */
+
 #ifndef QUIZ_CLI_ANSWER_H
 #define QUIZ_CLI_ANSWER_H
 

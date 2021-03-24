@@ -1,3 +1,9 @@
+/**
+ * Functii ajutatoare pentru struct-ul Answer
+ * 
+ * Documentatie pentru functii in header
+ */
+
 #include "answer.h"
 
 void answer_to_string(Answer ans, char s[]) {

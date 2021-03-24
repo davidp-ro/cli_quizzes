@@ -1,3 +1,9 @@
+/**
+ * Functii ajutatoare pentru struct-ul Answer
+ * 
+ * Documentatie pentru functii in header
+ */
+
 #include "question.h"
 
 void question_to_string(Question que, char s[]) {

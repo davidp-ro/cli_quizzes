@@ -5,14 +5,16 @@
  * 
  * @copyright The Unlicense - Public Domain
  * 
- * Format quizzes.data
+ * Format fisier quiz
+ * ---------------------
  *  Fiecare quiz incepe cu BEGIN_QUIZ
  *  Pe urmatoarea linie va fi numarul de intrebari (n)
  *  Pe urmatoarele n linii vor fi intrebarile efective cu urmatorul format (unde rasp. corect e marcat cu !):
  *      Subiect intrebare, nr_raspunsuri, raspuns1, !raspuns2, raspuns3, raspuns4
  *  Fiecare quiz se termina cu END_QUIZ
  * 
- * Compile:
+ * Compilare / Compile
+ * ---------------------
  *  V Compilator  V Linkuim source-file-urile                                                                                                         Toate Warning-urile V   V Output
  *  g++ main.cpp -I data/ data/reader_writter.cpp -I models/ models/answer.cpp -I models/ models/question.cpp -I ui/ ui/tui.cpp -I services/ services/quiz_service.cpp -Wall -o quizzes.exe
  */
@@ -73,6 +75,7 @@ int main() {
 
         switch (atoi(option)) {
             case 1:
+                // Modul de test pentru quiz
                 category = ui::select_quiz_category("Inceperea unui nou Quiz");
                 if (is_valid_category(category)) {
                     char select_title[] = "Selectati un quiz din categoria ";
@@ -88,6 +91,7 @@ int main() {
                 }
                 break;
             case 2:
+                // Doar vizualizarea quiz-urilor
                 category = ui::select_quiz_category("Quiz-uri disponibile");
                 if (is_valid_category(category)) {
                     char select_title[] = "Selectati un quiz din categoria ";
@@ -103,12 +107,14 @@ int main() {
                 }
                 break;
             case 3:
+                // Adaugare quiz
                 category = ui::select_quiz_category("Selectati categoria in care doriti sa adaugati quiz-ul");
                 if (is_valid_category(category)) {
                     create_quiz(quizzes, category);
                 }
                 break;
             case 4:
+                // Stergere quiz
                 category = ui::select_quiz_category("Stergeti un quiz");
                 if (is_valid_category(category)) {
                     char select_title[] = "Selectati un quiz din categoria ";
@@ -126,6 +132,8 @@ int main() {
                 }
                 break;
             case 5:
+                // Leaderboard local
+                // TODO
                 break;
             default:
                 ui::reset();

@@ -1,5 +1,5 @@
 /**
- * Citirea si scrierea datelor in fisier (data/quizzes.data) 
+ * Citirea si scrierea datelor din/in fisierele din folderul quiz-uri
  */
 
 #ifndef QUIZ_CLI_READER_WRITTER_H

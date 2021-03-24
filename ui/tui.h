@@ -1,3 +1,7 @@
+/**
+ * Se ocupa de tot ce e legat de ui - afisari / clear / input-uri
+ */
+
 #ifndef QUIZ_CLI_TUI_H
 #define QUIZ_CLI_TUI_H
 
@@ -7,6 +11,8 @@
 #include "../models/quiz.h"
 #include "../models/user.h"
 
+// Folosit in special pentru char[]-uri folosite la input-uri, cand vor fi citite 
+// MAX_SAFE_INPUT - 1 caractere
 const int MAX_SAFE_INPUT = 256;
 
 namespace ui {
@@ -31,8 +37,11 @@ const char categorii_quiz[][30] = {"Matematica", "Romana", "Geografie", "Biologi
 /* ================================[ Functii ]=============================== */
 
 /**
- * @brief Wrapper pentru citire
+ * @brief Wrapper pentru citire.
  * 
+ * @example if (!ui::input(s)) -> Daca e true -> Iesire din program
+ *                             -> Daca e false -> In s va fi input-ul
+ *
  * @param s string-ul unde va fi stocat ce e citit
  * @return 0 - User-ul vrea sa iasa | 1 - Input normal
  */
@@ -68,8 +77,22 @@ int select_quiz(const char * title, Quiz quizzes[][MAX_NUMBER_OF_QUIZZES], int t
  */
 void show_quiz_question(Quiz quiz, User user, unsigned short question_index, bool view_mode);
 
+/**
+ * @brief Creeaza o intrebare (prin afisari repetate)
+ * 
+ * @param q referinta la noua intrebare
+ * @param question_number index-ul curent
+ * @return int - -1: exit | 0: ok 
+ */
 int create_question(Question &q, unsigned short question_number);
 
+/**
+ * @brief Creeaza un raspuns (prin afisari repetate)
+ * 
+ * @param a referinta la noul raspuns
+ * @param answer_number index-ul curent
+ * @return int - -1: exit | 0: ok  
+ */
 int create_answer(Answer &a, unsigned short answer_number);
 
 /**
@@ -85,7 +108,9 @@ void welcome();
 /* ===============================[ Helpers ]================================ */
 
 /**
- * @brief Reprezentarea date time ca string (padded)
+ * @brief Reprezentarea date time (padded) ca string.
+ * 
+ * Padded = In loc de 9:31 / 1.1.2000 va fi 09:31 / 01.01.2000
  * 
  * @param s hh:mm dd:MM:yyyy
  */
@@ -102,7 +127,7 @@ void put_header();
 void put_footer();
 
 /**
- * @brief Face clear la ecran fara system("cls") (Windows only!)
+ * @brief Face clear la consola fara system("cls") (Windows only!)
  * 
  * Articol: https://www.cplusplus.com/articles/4z18T05o/
  */

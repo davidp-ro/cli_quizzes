@@ -1,4 +1,6 @@
 /**
+ * Citirea si scrierea datelor din/in fisierele din folderul quiz-uri
+ * 
  * Documentatie pentru functii in header
  */
 
