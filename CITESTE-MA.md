@@ -2,7 +2,7 @@
 
 ![Poza cu meniul principal](main_menu.png)
 
-Un proiect simplu cu struct-uri. [Readme in Emglish](README.md)
+Un proiect simplu cu struct-uri. [Readme in English](README.md)
 
 ---
 
