@@ -153,6 +153,57 @@ void ui::welcome() {
     ui::put_footer();
 }
 
+int ui::create_question(Question &q, unsigned short question_number) {
+    char buf[MAX_SAFE_INPUT];
+    
+    std::cout << "\n" << ui::separator << "\n";
+
+    std::cout << "\nSubiectul intrebarii " << question_number + 1 << ": ";
+    if (!ui::input(buf)) {
+        return -1;
+    }
+    strcpy(q.subject, buf);
+    std::cout << "\nCate raspunsuri are intrebarea: ";
+    if (!ui::input(buf)) {
+        return -1;
+    }
+    q.number_of_answers = atoi(buf);
+
+    for (unsigned short answer_index = 0;
+         answer_index < q.number_of_answers;
+         ++answer_index) {
+        Answer newAnswer;
+        if (ui::create_answer(newAnswer, answer_index) != 0) {
+            return -1;
+        }
+        q.answers[answer_index] = newAnswer;
+    }
+
+    return 0;
+}
+
+int ui::create_answer(Answer &a, unsigned short answer_number) {
+    char buf[MAX_SAFE_INPUT];
+
+    std::cout << "\nNumele raspunsului " << answer_number + 1 << ": ";
+    if (!ui::input(buf)) {
+        return -1;
+    }
+    strcpy(a.name, buf);
+
+    std::cout << "\nE corect? (da/nu): ";
+    if (!ui::input(buf)) {
+        return -1;
+    }
+    if (strstr(buf, "da") || strstr(buf, "DA")) {
+        a.is_correct = true;
+    } else {
+        a.is_correct = false;
+    }
+
+    return 0;
+}
+
 /* ===============================[ Helpers ]================================ */
 
 void ui::get_time_and_date(char s[]) {

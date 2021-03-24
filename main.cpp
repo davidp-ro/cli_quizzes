@@ -13,7 +13,7 @@
  *  Fiecare quiz se termina cu END_QUIZ
  * 
  * Compile:
- *  V Compilator  V Linkuim source-file-urile                                                                                                Toate Warning-urile V   V Output
+ *  V Compilator  V Linkuim source-file-urile                                                                                                         Toate Warning-urile V   V Output
  *  g++ main.cpp -I data/ data/reader_writter.cpp -I models/ models/answer.cpp -I models/ models/question.cpp -I ui/ ui/tui.cpp -I services/ services/quiz_service.cpp -Wall -o quizzes.exe
  */
 
@@ -21,7 +21,13 @@
 #include "services/quiz_service.h"
 #include "ui/tui.h"
 
-bool is_valid_category(int category);
+/**
+ * @brief Verifica daca cateogria e valida
+ * 
+ * @param category categoria de verificat
+ * @return true / false 
+ */
+inline bool is_valid_category(int category);
 
 int main() {
     std::cout << "Initializare...\n";
@@ -97,7 +103,10 @@ int main() {
                 }
                 break;
             case 3:
-                // TODO: Ecran pentru creeatie
+                category = ui::select_quiz_category("Selectati categoria in care doriti sa adaugati quiz-ul");
+                if (is_valid_category(category)) {
+                    create_quiz(quizzes, category);
+                }
                 break;
             case 4:
                 category = ui::select_quiz_category("Stergeti un quiz");
@@ -119,6 +128,6 @@ int main() {
     return EXIT_SUCCESS;
 }
 
-bool is_valid_category(int category) {
+inline bool is_valid_category(int category) {
     return (category >= 0 && category < NUMBER_OF_TYPES);
 }

@@ -1,7 +1,7 @@
 #include "quiz_service.h"
 
 void put_current_question_to_file(std::ofstream &file, Quiz quiz, unsigned short question_index) {
-    file << "Intrebarea " << question_index + 1 << " din " << quiz.number_of_questions 
+    file << "Intrebarea " << question_index + 1 << " din " << quiz.number_of_questions
          << " - " << quiz.questions[question_index].subject << "\n";
 
     for (unsigned short answer_index = 0;
@@ -23,7 +23,7 @@ void get_filename(char s[], char date_time[], User user, Quiz quiz) {
 }
 
 void make_valid_path(char path[]) {
-    for (int i=0; path[i]; ++i) {
+    for (int i = 0; path[i]; ++i) {
         if (path[i] == '\\')
             path[i] = '/';
         else if (path[i] == ' ')
@@ -35,14 +35,14 @@ void make_valid_path(char path[]) {
 
 int take_quiz(Quiz quiz, User user) {
     unsigned short raspunsuri_corecte = 0;
-    
+
     char save_path[1024] = "";
     strcpy(save_path, getenv("USERPROFILE"));
 
     if (strlen(save_path) != 0) {
         strcat(save_path, "\\Desktop\\");
     }
-    char td[MAX_SAFE_INPUT]; 
+    char td[MAX_SAFE_INPUT];
     ui::get_time_and_date(td);
 
     // Fisier salvare
@@ -51,13 +51,14 @@ int take_quiz(Quiz quiz, User user) {
     strcat(save_path, filename);
     make_valid_path(save_path);
     std::ofstream s_file(save_path);
-    
+
     s_file << "REZULTAT - Nume: " << user.name << " | Cod Verificare: " << user.verification_code << "\n";
     s_file << "Inceput la " << td << "\n\n";
 
     s_file << "Quiz - Nume: " << quiz.name << " | Categorie: " << ui::categorii_quiz[quiz.type] << "\n";
 
-    s_file << "\n" << ui::separator << "\n\n";
+    s_file << "\n"
+           << ui::separator << "\n\n";
 
     for (unsigned short question_index = 0;
          question_index < quiz.number_of_questions;
@@ -85,7 +86,8 @@ int take_quiz(Quiz quiz, User user) {
             s_file << "Nu\n";
         }
 
-        s_file << "\n" << ui::separator << "\n\n";
+        s_file << "\n"
+               << ui::separator << "\n\n";
     }
 
     ui::get_time_and_date(td);
@@ -111,4 +113,46 @@ int view_quiz(Quiz quiz, User user) {
     }
 
     return 0;
+}
+
+int create_quiz(Quiz quizzes[][MAX_NUMBER_OF_QUIZZES], int category) {
+    Quiz newQuiz;
+    newQuiz.type = (QuizType)category;
+    char buf[MAX_SAFE_INPUT];
+
+    ui::reset();
+    ui::put_header();
+    std::cout << ui::footer << "\n";
+
+    std::cout << "\nNumele quiz-ului: ";
+    if (!ui::input(buf)) {
+        return -1;
+    }
+    strcpy(newQuiz.name, buf);
+    std::cout << "\nCate intrebari are quiz-ul: ";
+    if (!ui::input(buf)) {
+        return -1;
+    }
+    newQuiz.number_of_questions = atoi(buf);
+
+    for (unsigned short question_index = 0;
+         question_index < newQuiz.number_of_questions;
+         ++question_index) {
+        Question newQuestion;
+        if (ui::create_question(newQuestion, question_index) != 0) {
+            return -1;
+        }
+        newQuiz.questions[question_index] = newQuestion;
+    }
+
+    // Salvare
+    for (int quiz_index = 0; quiz_index < MAX_NUMBER_OF_QUIZZES; ++quiz_index) {
+        if (strlen(quizzes[category][quiz_index].name) == 0) {
+            quizzes[category][quiz_index] = newQuiz;
+            write(quizzes);
+            return 0;
+        }
+    }
+
+    return -1;
 }

@@ -6,3 +6,10 @@ Rezultatul pentru 11x12, 3, !132, 123, 144
 Rezultatul pentru 12x88x0x43-12, 3, 45396, 12, !-12
 END_QUIZ
 
+BEGIN_QUIZ
+Test
+2
+Cat e 1+1, 3, 1, !2, 3
+test, 2, !a, b
+END_QUIZ
+
