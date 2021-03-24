@@ -52,7 +52,7 @@ int main() {
         strcpy(user.verification_code, "<FARA>");
     };
 
-    std::cout << ui::separator 
+    std::cout << ui::separator
               << "\nIntroduceti numele dumneavoastra\n";
     if (!ui::input(user.name)) {
         return EXIT_SUCCESS;
@@ -111,8 +111,21 @@ int main() {
             case 4:
                 category = ui::select_quiz_category("Stergeti un quiz");
                 if (is_valid_category(category)) {
-                    selection = ui::select_quiz("", quizzes, category);
+                    char select_title[] = "Selectati un quiz din categoria ";
+                    strcat(select_title, ui::categorii_quiz[category]);
+
+                    selection = ui::select_quiz(select_title, quizzes, category);
+
+                    for (unsigned short quiz_index = selection;
+                         quiz_index < (MAX_NUMBER_OF_QUIZZES - 1);
+                         ++quiz_index) {
+                        quizzes[category][quiz_index] = quizzes[category][quiz_index + 1];
+                    }
+
+                    write(quizzes);
                 }
+                break;
+            case 5:
                 break;
             default:
                 ui::reset();

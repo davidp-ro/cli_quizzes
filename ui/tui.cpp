@@ -130,7 +130,8 @@ void ui::main_menu(User user) {
               << "\t1) Incepeti un nou quiz\n\n"
               << "\t2) Vedeti quiz-urile disponibile\n"
               << "\t3) Creeati un nou quiz\n"
-              << "\t4) Stergeti un quiz\n";
+              << "\t4) Stergeti un quiz\n\n"
+              << "\t5) Rezultate anterioare\n";
     ui::put_footer();
 }
 

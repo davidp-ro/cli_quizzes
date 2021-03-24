@@ -15,7 +15,7 @@ namespace ui {
 
 const char header[] = "==========================[ QuizCLI - David Pescariu ]==========================";
 const char separator[] = "--------------------------------------------------------------------------------";
-const char footer[] = "=====================[Pentru a iesi, introduceti q oricand]=====================";
+const char footer[] = "=============[Pentru a iesi sau merge inapoi, introduceti q oricand]============";
 
 const char bun_venit[][75] = {
     "______                               _ _     _ \n",
