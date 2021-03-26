@@ -13,8 +13,8 @@ const int MAX_NUMBER_OF_CATEGORIES = 6;
 // Cate quiz-uri pot fi stocate pt fiecare categorie de quiz-uri
 const int MAX_NUMBER_OF_QUIZZES = 12;
 
-// Cate tipuri sunt in enum - 1
-const int NUMBER_OF_TYPES = 3;
+// Cate tipuri sunt in enum
+const int NUMBER_OF_TYPES = 4;
 
 /**
  * @brief Tipurile de quiz disponibile
