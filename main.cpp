@@ -15,12 +15,13 @@
  * 
  * Compilare / Compile
  * ---------------------
- *  V Compilator  V Linkuim source-file-urile                                                                                                         Toate Warning-urile V   V Output
- *  g++ main.cpp -I data/ data/reader_writter.cpp -I models/ models/answer.cpp -I models/ models/question.cpp -I ui/ ui/tui.cpp -I services/ services/quiz_service.cpp -Wall -o quizzes.exe
+ *  V Compilator  V Linkuim source-file-urile                                                                                                                                                      Toate Warning-urile V   V Output
+ *  g++ main.cpp -I data/ data/reader_writter.cpp -I models/ models/answer.cpp -I models/ models/question.cpp -I ui/ ui/tui.cpp -I services/ services/quiz_service.cpp -I services/ services/statistics_service.cpp -Wall -o quizzes.exe
  */
 
 #include "data/reader_writter.h"
 #include "services/quiz_service.h"
+#include "services/statistics_service.h"
 #include "ui/tui.h"
 
 /**
@@ -133,7 +134,29 @@ int main() {
                 break;
             case 5:
                 // Leaderboard local
-                // TODO
+                ui::reset();
+                std::cout << "Se incarca...\n";
+
+                PreviousResult results[MAX_PREVIOUS_RESULTS];
+                unsigned short number_of_results;
+
+                if (read_statistics(results, number_of_results) == -1) {
+                    ui::reset();
+                    std::cout << "Whoops! Ceva nu a mers bine! (Nu s-a putut citi statistics_service.data)\n";
+                    return EXIT_FAILURE;
+                };
+
+                if (number_of_results == 0) {
+                    ui::reset();
+                    std::cout << "Nu sunt disponibile rapoarte anterioare\n";
+                    Sleep(1500);
+                    break;
+                }
+
+                if (ui::show_reports(results, number_of_results) == 99) {
+                    delete_statistics();
+                }
+
                 break;
             default:
                 ui::reset();

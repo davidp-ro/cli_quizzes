@@ -10,6 +10,7 @@
 #include <ctime>
 #include "../models/quiz.h"
 #include "../models/user.h"
+#include "../models/result.h"
 
 // Folosit in special pentru char[]-uri folosite la input-uri, cand vor fi citite 
 // MAX_SAFE_INPUT - 1 caractere
@@ -48,6 +49,8 @@ const char categorii_quiz[][30] = {"Matematica", "Romana", "Geografie", "Biologi
 int input(char s[]);
 
 /* ===============================[ Screens ]================================ */
+
+// Quiz-uri
 
 /**
  * @brief Afiseaza (+input) meniul pentru selectarea categoriei
@@ -94,6 +97,12 @@ int create_question(Question &q, unsigned short question_number);
  * @return int - -1: exit | 0: ok  
  */
 int create_answer(Answer &a, unsigned short answer_number);
+
+// Statistici
+
+int show_reports(PreviousResult results[], unsigned short number_of_reports);
+
+// General
 
 /**
  * @brief Afiseaza meniul 

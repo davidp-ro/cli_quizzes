@@ -8,6 +8,7 @@
 #include <fstream>
 #include "../ui/tui.h"
 #include "../data/reader_writter.h"
+#include "statistics_service.h"
 
 // Daca e true va afisa path-ul pana la fiserul de salvare
 const bool DBG_SHOW_FILEPATH = false;

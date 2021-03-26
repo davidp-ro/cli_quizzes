@@ -117,6 +117,37 @@ void ui::show_quiz_question(Quiz quiz, User user, unsigned short question_index,
     ui::put_footer();
 }
 
+int ui::show_reports(PreviousResult results[], unsigned short number_of_reports) {
+    ui::reset();
+    ui::put_header();
+    std::cout << "Rezultate anterioare:\n";
+
+    std::cout << "\n" << ui::separator << "\n\n";
+
+    for (unsigned short index = 0; index < number_of_reports; ++index) {
+        std::cout << index + 1 << ") " 
+                  << results[index].quiz_name << " dat de "
+                  << results[index].username << " la "
+                  << results[index].time_date << " cu scorul: "
+                  << results[index].score << "\n";
+    }
+
+
+    std::cout << "\n" << ui::separator << "\n";
+
+    std::cout << "Pentru resetarea rezultatelor anterioare introduceti 'reset'\n";
+    ui::put_footer();
+
+    char option[MAX_SAFE_INPUT];
+    if (!ui::input(option)) {
+        return -1;
+    }
+    if (strstr(option, "reset")) {
+        return 99;
+    }
+    return 0;
+}
+
 void ui::main_menu(User user) {
     char timedate[80];
     ui::get_time_and_date(timedate);

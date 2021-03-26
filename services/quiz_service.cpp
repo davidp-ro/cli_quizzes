@@ -97,12 +97,17 @@ int take_quiz(Quiz quiz, User user) {
     }
 
     ui::get_time_and_date(td);
+    char scor[32];
+    itoa((raspunsuri_corecte * 100 / quiz.number_of_questions), scor, 10);
+    strcat(scor, "%");
+
     s_file << "\nSUMAR:\n"
            << "Finalizat la " << td << "\n"
            << raspunsuri_corecte << " raspunsuri corecte din " << quiz.number_of_questions << " raspunsuri totale"
-           << " | Scor: " << (raspunsuri_corecte * 100) / quiz.number_of_questions << "%";
+           << " | Scor: " << scor << "\n";
 
     s_file.close();
+    write_statistic(user.name, quiz.name, td, scor);
     return 0;
 }
 
