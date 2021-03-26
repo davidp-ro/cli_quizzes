@@ -1,3 +1,9 @@
+/**
+ * Se ocupa de operatiile legate de statistici
+ * 
+ * Documentatie pentru functii in header
+ */
+
 #include "statistics_service.h"
 
 int read_statistics(PreviousResult results[MAX_PREVIOUS_RESULTS], unsigned short &n) {
