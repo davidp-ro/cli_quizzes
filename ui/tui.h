@@ -100,7 +100,15 @@ int create_answer(Answer &a, unsigned short answer_number);
 
 // Statistici
 
-int show_reports(PreviousResult results[], unsigned short number_of_reports);
+/**
+ * @brief Afiseaza statistici - rezultate anterioare / leaderboard
+ * 
+ * @param results array cu rezultatele ce vor fi afisate
+ * @param number_of_reports cate rezultate sunt
+ * @param title titlul afisat pe ecran
+ * @return status code: -1: exit | 0: success | 99: sterge datele
+ */
+int show_reports(PreviousResult results[], unsigned short number_of_reports, const char title[]);
 
 // General
 

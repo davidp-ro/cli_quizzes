@@ -42,6 +42,8 @@ int read_statistics(PreviousResult results[MAX_PREVIOUS_RESULTS], unsigned short
                     break;
                 case 4:
                     strcpy(results[i].score, ptr);
+                    strtok(ptr, "%"); // In ptr va ramane doar valoarea ca numar
+                    results[i].i_score = atoi(ptr);
                     ++step;  // Nu mai e folosit
                     ++i;
                     ++n;
@@ -68,4 +70,20 @@ void write_statistic(char username[], char quiz_name[], char time_date[], char s
 void delete_statistics() {
     std::ofstream fout("quiz_uri/statistics.data");
     fout.close();
+}
+
+void swap(PreviousResult &r1, PreviousResult &r2) {
+    PreviousResult temp = r1;
+    r1 = r2;
+    r2 = temp;
+}
+
+void sort_results_by_score(PreviousResult results[], unsigned short n) {
+    for (unsigned short i = 0; i < n - 1; ++i) {
+        for (unsigned short index = 0; index < n - i - 1; ++index) {
+            if (results[index].i_score < results[index + 1].i_score) {
+                swap(results[index], results[index + 1]);
+            }
+        }
+    }
 }

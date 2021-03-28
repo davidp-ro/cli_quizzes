@@ -117,10 +117,10 @@ void ui::show_quiz_question(Quiz quiz, User user, unsigned short question_index,
     ui::put_footer();
 }
 
-int ui::show_reports(PreviousResult results[], unsigned short number_of_reports) {
+int ui::show_reports(PreviousResult results[], unsigned short number_of_reports, const char title[]) {
     ui::reset();
     ui::put_header();
-    std::cout << "Rezultate anterioare:\n";
+    std::cout << title << "\n";
 
     std::cout << "\n" << ui::separator << "\n\n";
 
@@ -168,7 +168,8 @@ void ui::main_menu(User user) {
               << "\t2) Vedeti quiz-urile disponibile\n"
               << "\t3) Creeati un nou quiz\n"
               << "\t4) Stergeti un quiz\n\n"
-              << "\t5) Rezultate anterioare\n";
+              << "\t5) Rezultate anterioare\n"
+              << "\t6) Leaderboard local\n";
     ui::put_footer();
 }
 

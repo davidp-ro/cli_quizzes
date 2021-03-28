@@ -36,4 +36,12 @@ void write_statistic(char username[], char quiz_name[], char time_date[], char s
  */
 void delete_statistics();
 
+/**
+ * @brief Sorteaza (descrescator dupa scor) rezultatele
+ * 
+ * @param results rezultatele anterioare
+ * @param n cate rezultate sunt
+ */
+void sort_results_by_score(PreviousResult results[], unsigned short n);
+
 #endif

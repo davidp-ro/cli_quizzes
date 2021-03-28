@@ -13,10 +13,10 @@
  *      Subiect intrebare, nr_raspunsuri, raspuns1, !raspuns2, raspuns3, raspuns4
  *  Fiecare quiz se termina cu END_QUIZ
  * 
- * Compilare / Compile
+ * Compilare
  * ---------------------
- *  V Compilator  V Linkuim source-file-urile                                                                                                                                                      Toate Warning-urile V   V Output
- *  g++ main.cpp -I data/ data/reader_writter.cpp -I models/ models/answer.cpp -I models/ models/question.cpp -I ui/ ui/tui.cpp -I services/ services/quiz_service.cpp -I services/ services/statistics_service.cpp -Wall -o quizzes.exe
+ * Din folderul cli_quizzes rulati (Command Prompt / PS):
+ *  mingw32-make.exe SAU make
  */
 
 #include "data/reader_writter.h"
@@ -73,6 +73,8 @@ int main() {
 
         int category = 0;
         int selection = 0;
+        PreviousResult results[MAX_PREVIOUS_RESULTS];
+        unsigned short number_of_results;
 
         switch (atoi(option)) {
             case 1:
@@ -133,12 +135,9 @@ int main() {
                 }
                 break;
             case 5:
-                // Leaderboard local
+                // Rezultate anterioare
                 ui::reset();
                 std::cout << "Se incarca...\n";
-
-                PreviousResult results[MAX_PREVIOUS_RESULTS];
-                unsigned short number_of_results;
 
                 if (read_statistics(results, number_of_results) == -1) {
                     ui::reset();
@@ -153,7 +152,32 @@ int main() {
                     break;
                 }
 
-                if (ui::show_reports(results, number_of_results) == 99) {
+                if (ui::show_reports(results, number_of_results, "Rezultate anterioare") == 99) {
+                    delete_statistics();
+                }
+
+                break;
+            case 6:
+                // Leaderboard local
+                ui::reset();
+                std::cout << "Se incarca...\n";
+
+                if (read_statistics(results, number_of_results) == -1) {
+                    ui::reset();
+                    std::cout << "Whoops! Ceva nu a mers bine! (Nu s-a putut citi statistics_service.data)\n";
+                    return EXIT_FAILURE;
+                };
+
+                if (number_of_results == 0) {
+                    ui::reset();
+                    std::cout << "Nu sunt disponibile rapoarte anterioare\n";
+                    Sleep(1500);
+                    break;
+                }
+
+                sort_results_by_score(results, number_of_results);
+
+                if (ui::show_reports(results, number_of_results, "Leaderboard") == 99) {
                     delete_statistics();
                 }
 
