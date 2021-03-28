@@ -31,8 +31,7 @@ This was a simple school project meant to teach us how to use structs. [Readme i
 
 ### How to build
 - Windows only (uses windows API to clear the console)
-- No dependencies
-- Run `g++ main.cpp -I data/ data/reader_writter.cpp -I models/ models/answer.cpp -I models/ models/question.cpp -I ui/ ui/tui.cpp -I services/ services/quiz_service.cpp -I services/ services/statistics_service.cpp -Wall -o quizzes.exe`
+- Run `mingw32-make.exe` OR `make`
 
 ### Is it romanian only?
 - Yes, yes it is :(

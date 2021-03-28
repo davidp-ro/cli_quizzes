@@ -23,12 +23,14 @@ Un proiect simplu cu struct-uri. [Readme in English](README.md)
 - Ofera posibilitatea de a lua / creea quiz-uri (+ niste statistici)
 
 ### Cum sa rulezi
-- Windows: Dublu-click `quizzes.exe`
+- Windows: 
+  - Extrageti din arhiva `quizzes.exe` si folder-ul `quiz_uri` in aceeasi locatie
+  - Rulati `quizzes.exe`
 - Altele: `¯\_(ツ)_/¯`
 
 ### Cum sa compilezi
 - Windows only (foloseste un API windows ca sa curete consola)
-- Command Prompt: `g++ main.cpp -I data/ data/reader_writter.cpp -I models/ models/answer.cpp -I models/ models/question.cpp -I ui/ ui/tui.cpp -I services/ services/quiz_service.cpp -Wall -o quizzes.exe`
+- Rulati `mingw32-make.exe` SAU `make`
 
 ---
 
