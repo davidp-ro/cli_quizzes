@@ -13,7 +13,7 @@
 const unsigned short MAX_PREVIOUS_RESULTS = 256;
 
 /**
- * @brief Citeste rezultatele anterioare (din services/statistics_service.data)
+ * @brief Citeste rezultatele anterioare (din quiz_uri/statistics.data)
  * 
  * @param results aici vor fi salvate
  * @param n referinta - aici se va memora numarul de rezultate anterioare

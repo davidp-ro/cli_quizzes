@@ -7,7 +7,7 @@
 #include "statistics_service.h"
 
 int read_statistics(PreviousResult results[MAX_PREVIOUS_RESULTS], unsigned short &n) {
-    std::ifstream fin("services/statistics_service.data");
+    std::ifstream fin("quiz_uri/statistics.data");
     char buffer[1025];
     unsigned short i = 0;
     n = 0;
@@ -58,7 +58,7 @@ int read_statistics(PreviousResult results[MAX_PREVIOUS_RESULTS], unsigned short
 
 void write_statistic(char username[], char quiz_name[], char time_date[], char score[]) {
     std::fstream fout;
-    fout.open("services/statistics_service.data", std::fstream::app); // Append
+    fout.open("quiz_uri/statistics.data", std::fstream::app); // Append
 
     fout << username << "," << quiz_name << "," << time_date << "," << score << "\n";
     
@@ -66,6 +66,6 @@ void write_statistic(char username[], char quiz_name[], char time_date[], char s
 }
 
 void delete_statistics() {
-    std::ofstream fout("services/statistics_service.data");
+    std::ofstream fout("quiz_uri/statistics.data");
     fout.close();
 }

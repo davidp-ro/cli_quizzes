@@ -24,13 +24,15 @@ This was a simple school project meant to teach us how to use structs. [Readme i
 - It allows you to take / create quizzes (+ some statistics)
 
 ### How to run
-- Windows: Run `quizzes.exe` (you can download it from the _Releases_ tab if you really want)
-- Other: `¯\_(ツ)_/¯`
+- Windows:
+  - Download the `quizzes.zip` archive and unzip the `.exe` and the `quiz_uri` folder in the same location
+  - Run `quizzes.exe`
+- Other: `Not supported ¯\_(ツ)_/¯`
 
 ### How to build
 - Windows only (uses windows API to clear the console)
 - No dependencies
-- Run `g++ main.cpp -I data/ data/reader_writter.cpp -I models/ models/answer.cpp -I models/ models/question.cpp -I ui/ ui/tui.cpp -I services/ services/quiz_service.cpp -Wall -o quizzes.exe`
+- Run `g++ main.cpp -I data/ data/reader_writter.cpp -I models/ models/answer.cpp -I models/ models/question.cpp -I ui/ ui/tui.cpp -I services/ services/quiz_service.cpp -I services/ services/statistics_service.cpp -Wall -o quizzes.exe`
 
 ### Is it romanian only?
 - Yes, yes it is :(
